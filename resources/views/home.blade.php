@@ -22,15 +22,7 @@
                 </p>
                 <a href="#" class="btn btn-primary">Ver reseña</a>
             </div>
-        </div>
-            <div class="card-body">
-                <h5 class="card-title">Muy buena App</h5>
-                <p class="card-text">
-                    Esta App me encanta, tiene muchas funcionalidades de valor...
-                </p>
-                <a href="#" class="btn btn-primary">Ver reseña</a>
-            </div>
-        </div>
+        
     </div>
   
 
