@@ -2,15 +2,25 @@
 
 @section('contenido')
 
+
 @if (session('success'))
 <script>
     Swal.fire({
-        title: 'Todo correcto: Proveedor registrado',
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
+        title: 'Guardado',
+        width: 600,
+        padding: '3em',
+        color: '#716add',
+        background: '#fff url(/images/trees.png)',
+        backdrop: `
+        rgba(0,0,123,0.4)
+        url("/images/nyan-cat.gif")
+        left top
+        no-repeat
+        `
     })
 </script>
 @endif
+
 
 <div class="container">
     <h1> Almacen Comics </h1>
