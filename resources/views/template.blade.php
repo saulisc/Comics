@@ -30,7 +30,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('almacenComics') }}">Almacen Comics</a>
+                        <a class="nav-link" href="{{ route('comics.createComics') }}">Almacen Comics</a>
                     </li>
 
                     <li class="nav-item">

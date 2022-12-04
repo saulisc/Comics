@@ -13,10 +13,8 @@ class ControladorVistas extends Controller
     
     public function procesarFormularioComics(validadorRequestFormCom $request){
        # $titulo = $request->input('txtTitulo');
-        //el success cuenta mucho a la hora de regresar ese return 
-        return redirect() -> route('almacenComics') -> with('success', 'ok');
-        //return view('almacenComics')-> with('success','succes');
-        //return view('registro', compact('titulo'));
+        return redirect() -> route('almacenComics') -> with('Guardado', 'ok');
+        
     }
 
     public function procesarLogIn(validadorRequestProcLogin $request){
