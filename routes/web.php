@@ -49,6 +49,26 @@ Route::get('productos/{id}/deleteProductos', [ControladorDB::class, 'deleteProdu
 Route::delete('productos/{id}', [ControladorDB::class, 'destroyProductos']) -> name('productos.destroyProductos');
 
 
+//ROUTES FOR PROVEEDORES
+//create proveedores
+Route::get('proveedores/createProveedores', [ControladorDB::class,'createProveedores']) -> name('proveedores.createProveedores');
+//post on db for proveedores
+Route::post('proveedores', [ControladorDB::class, 'storeProveedores']) -> name('proveedores.storeProveedores');
+
+//list proveedores
+Route::get('proveedores', [ControladorDB::class,'indexProveedores']) -> name('proveedores.indexProveedores');
+
+//edit proveedores
+Route::get('/proveedores/{id}/editProveedores', [ControladorDB::class,'editProveedores']) -> name('proveedores.editProveedores');
+//update proveedores 
+Route::put('proveedores/{id}', [ControladorDB::class,'updateProveedores']) -> name('proveedores.updateProveedores');
+
+//get delete proveedores
+Route::get('proveedores/{id}/deleteProveedores', [ControladorDB::class, 'deleteProveedores']) -> name('proveedores.deleteProveedores');
+//delete proveedores
+Route::delete('proveedores/{id}', [ControladorDB::class, 'destroyProveedores']) -> name('proveedores.destroyProveedores');
+
+
 
 
 

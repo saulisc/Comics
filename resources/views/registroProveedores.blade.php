@@ -3,7 +3,7 @@
 @section('contenido')
 
 
-@if (session('success'))
+@if (session('Guardado'))
 <script>
     Swal.fire({
         title: 'Guardado',
@@ -21,10 +21,21 @@
 </script>
 @endif
 
+<script>
+    function confirmacion() {
+        var respuesta = confirm("¿Deseas enviar esta informacion?");
+        if (respuesta == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
 
 <div class="container">
-    <h1> Almacen Comics </h1>
-    <form method="POST" action="procesarFormularioProveedores">
+    <h1> Registro proveedores </h1>
+    <a href="{{ route('proveedores.indexProveedores') }}" class="btn btn-success m-1">Ver proveedores</a>
+    <form method="POST" action="{{ route('proveedores.storeProveedores') }}">
         @csrf
         <div class="mb-3">
             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Empresa</label>
@@ -77,7 +88,7 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Guardar proveedor</button>
+                <button type="submit" class="btn btn-primary" onclick="return confirmacion()">Guardar proveedor</button>
     </form>
 </div>
 </div>

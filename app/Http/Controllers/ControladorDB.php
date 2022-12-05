@@ -5,11 +5,90 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\validadorRequestFormCom;
 use App\Http\Requests\validadorRequestFormProd;
+use App\Http\Requests\validadorRequestProcFormProve;
 use DB;
 use Carbon\Carbon;
 
 class ControladorDB extends Controller
 {
+    //---------PROVEEDORES------
+
+    //to delete
+    public function destroyProveedores($id)
+    {
+        DB::table('tb_proveedores')
+            ->where('idProveedor', $id)
+            ->delete();
+
+        return redirect('proveedores')->with('Eliminado', 'abc');
+    }
+
+    //to take the id to delete
+    public function deleteProveedores($id)
+    {
+        $consultaIdProveedor = DB::table('tb_proveedores')
+            ->where('idProveedor', $id)
+            ->first();
+
+        return view('deleteProveedores', compact('consultaIdProveedor'));
+    }
+
+    //take the proveedor
+    public function editProveedores($id)
+    {
+        $consultaIdProveedor = DB::table('tb_proveedores')
+            ->where('idProveedor', $id)
+            ->first();
+        return view('editProveedores', compact('consultaIdProveedor'));
+    }
+    //update on db
+    public function updateProveedores(validadorRequestProcFormProve $request, $id)
+    {
+        DB::table('tb_proveedores')
+            ->where('idProveedor', $id)
+            ->update([
+                'empresa' => $request->input('txtEmpresaProv'),
+                'direccion' => $request->input('txtDireccionProv'),
+                'pais' => $request->input('txtPaisProv'),
+                'contacto' => $request->input('txtContactoProv'),
+                'noFijo' => $request->input('txtNoFijoProv'),
+                'noCelular' => $request->input('txtNoCelProv'),
+                'correo' => $request->input('txtCorreoProv'),
+                'updated_at' => Carbon::now(),
+            ]);
+        //ATENCION
+        //aqui tiene que ir la raiz de tu componente
+        return redirect('proveedores')->with('Actualizado', 'abc');
+    }
+    //get proveedores
+    public function indexProveedores()
+    {
+        $resultProveedor = DB::table('tb_proveedores')->get();
+        return view('listProveedores', compact('resultProveedor'));
+    }
+
+    //form proveedores
+    public function createProveedores()
+    {
+        return view('registroProveedores');
+    }
+    //save on DB
+    public function storeProveedores(validadorRequestProcFormProve $request)
+    {
+        DB::table('tb_proveedores')->insert([
+            'empresa' => $request->input('txtEmpresaProv'),
+            'direccion' => $request->input('txtDireccionProv'),
+            'pais' => $request->input('txtPaisProv'),
+            'contacto' => $request->input('txtContactoProv'),
+            'noFijo' => $request->input('txtNoFijoProv'),
+            'noCelular' => $request->input('txtNoCelProv'),
+            'correo' => $request->input('txtCorreoProv'),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        return redirect('proveedores/createProveedores')->with('Guardado', 'abc');
+    }
+
     //--------PRODUCTS----------
 
     //to delete
@@ -57,7 +136,6 @@ class ControladorDB extends Controller
                 'precioCompra' => $request->input('txtPrecioCompraProductos'),
                 'precioVenta' => $precioVenta,
                 'fecha' => Carbon::now(),
-                'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
         //ATENCION
@@ -90,6 +168,7 @@ class ControladorDB extends Controller
             'precioCompra' => $request->input('txtPrecioCompraProductos'),
             'precioVenta' => $precioVenta,
             'fecha' => Carbon::now(),
+            'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
         return redirect('productos/createProductos')->with('Guardado', 'abc');
