@@ -7,6 +7,8 @@ use App\Http\Controllers\ControladorDB;
 
 //usando ControladorBD
 
+//ROUTES FOR COMICS
+
 //create comics
 Route::get('comics/createComics', [ControladorDB::class,'createComics']) -> name('comics.createComics');
 //post on db for comics
@@ -24,6 +26,31 @@ Route::put('comics/{id}', [ControladorDB::class,'updateComics']) -> name('comics
 Route::get('comics/{id}/deleteComics', [ControladorDB::class, 'deleteComics']) -> name('comics.deleteComics');
 //delete book
 Route::delete('comics/{id}', [ControladorDB::class, 'destroyComics']) -> name('comics.destroyComics');
+
+
+//ROUTES FOR PRODUCTS
+
+//create products
+Route::get('productos/createProductos', [ControladorDB::class,'createProductos']) -> name('productos.createProductos');
+//post on db for products
+Route::post('productos', [ControladorDB::class, 'storeProductos']) -> name('productos.storeProductos');
+
+//list productos
+Route::get('productos', [ControladorDB::class,'indexProductos']) -> name('productos.indexProductos');
+
+//edit productos
+Route::get('/productos/{id}/editProductos', [ControladorDB::class,'editProductos']) -> name('productos.editProductos');
+//update productos 
+Route::put('productos/{id}', [ControladorDB::class,'updateProductos']) -> name('productos.updateProductos');
+
+//get delete productos
+Route::get('productos/{id}/deleteProductos', [ControladorDB::class, 'deleteProductos']) -> name('productos.deleteProductos');
+//delete productos
+Route::delete('productos/{id}', [ControladorDB::class, 'destroyProductos']) -> name('productos.destroyProductos');
+
+
+
+
 
 //Rutas pasadas
 Route::get('/',[ControladorVistas::class,'home']) -> name('home');

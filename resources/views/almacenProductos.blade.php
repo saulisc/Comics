@@ -2,20 +2,7 @@
 
 @section('contenido')
 
-
-    <!--
-    @if (session('success'))
-    <script>
-        Swal.fire({
-            title: 'Todo correcto: Producto registrado',
-            icon: 'success',
-            confirmButtonText: 'Aceptar'
-        })
-    </script>
-    @endif
-    -->
-
-    @if (session('success'))
+    @if (session('Guardado'))
         <script>
             Swal.fire({
                 title: 'Guardado',
@@ -33,9 +20,21 @@
         </script>
     @endif
 
+    <script>
+        function confirmacion() {
+            var respuesta = confirm("¿Deseas enviar esta informacion?");
+            if (respuesta == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+
     <div class="container">
         <h1> Almacen Productos </h1>
-        <form method="POST" action="procesarFormularioProductos">
+        <a href="{{ route('productos.indexProductos') }}" class="btn btn-success m-1">Ver productos</a>
+        <form method="POST" action="{{ route('productos.storeProductos') }}">
             @csrf
             <div class="mb-3">
                 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Tipo</label>
@@ -72,7 +71,7 @@
                     <p class="text-danger fst-italic"> {{ $errors->first('txtPrecioCompraProductos') }}</p>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Guardar Comic</button>
+                    <button type="submit" class="btn btn-primary" onclick="return confirmacion()">Guardar Producto</button>
         </form>
     </div>
     </div>
