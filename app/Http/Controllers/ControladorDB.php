@@ -8,6 +8,7 @@ use App\Http\Requests\validadorRequestFormProd;
 use App\Http\Requests\validadorRequestProcFormProve;
 use DB;
 use Carbon\Carbon;
+//use App\Models\Comics;
 
 class ControladorDB extends Controller
 {
@@ -231,6 +232,25 @@ class ControladorDB extends Controller
     {
         $resultComic = DB::table('tb_comics')->get();
         return view('listComics', compact('resultComic'));
+    }
+
+    //get comics
+    public function inventarioComics(Request $request)
+    {
+        $resultComics = DB::table('tb_comics')->get();
+        $resultProductos = DB::table('table_productos')->get();
+
+        $buscarpor = $request->get('buscarpor');
+        $resultComics = DB::table('tb_comics')
+            ->where('nombre', 'LIKE', '%' . $buscarpor . '%')
+            ->get();
+
+        $resultProductos = DB::table('table_productos')
+            ->where('tipo', 'LIKE', '%' . $buscarpor . '%')
+            ->get();
+       
+        // return view('comics/inventario', compact('comics', 'texto'));
+        return view('inventario', compact('resultComics', 'resultProductos', 'buscarpor'));
     }
 
     //form comics

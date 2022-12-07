@@ -2,107 +2,81 @@
 
 @section('contenido')
 
-<table class="table">
-    <i class="bi bi-filter"></i>
-    <thead>
-      <tr>
-        <!-- comics -->
-        <th scope="col">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Edicion</th>
-        <th scope="col">Compañia</th>
-        <th scope="col">Unidad de Medida</th>
-        <th scope="col">Cantidad</th>
-        <!-- same of both -->
-        <th scope="col">Precio compra</th>
-        <th scope="col">Precio venta</th>
-        <th scope="col">Fecha ingreso</th>
-        <th scope="col">Tipo producto</th>
+    <div class="container col-md-6">
+        <table class="table">
+            <h2>Comics</h2>
 
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Goku</td>
-        <td>Latest</td>
-        <td>Universal Co</td>
-        <td>EXG</td>
-        <td>50</td>
-        <td>$.50</td>
-        <td>$100</td>
-        <td>10/10/10</td>
-        <td>Tipo: 1</td>
-      </tr>
-      
-      <tr>
-        <th scope="row">1</th>
-        <td>Vegeta</td>
-        <td>5.00</td>
-        <td>Universal Co</td>
-        <td>EXG</td>
-        <td>58</td>
-        <td>$90</td>
-        <td>$200</td>
-        <td>12/10/10</td>
-        <td>Tipo: 1</td>
+            <form class="d-flex" role="search">
+                <input name="buscarpor" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
 
-      </tr>
+            <thead>
+                <tr>
+                    <!-- comics -->
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Edicion</th>
+                    <th scope="col">Compañia</th>
+                    <th scope="col">Cantidad</th>
+                    <!-- same of both -->
+                    <th scope="col">Precio compra</th>
+                    <th scope="col">Precio venta</th>
+                    <th scope="col">Fecha ingreso</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($resultComics as $value)
+                    <tr>
+                        <td><a>{{ $value->idComic }}</a></td>
+                        <td><a>{{ $value->nombre }}</a></td>
+                        <td><a>{{ $value->edicion }}</a></td>
+                        <td><a>{{ $value->compania }}</a></td>
+                        <td><a>{{ $value->cantidad }}</a></td>
+                        <td><a>{{ $value->precioCompra }}</a></td>
+                        <td><a>{{ $value->precioVenta }}</a></td>
+                        <td><a>{{ $value->created_at }}</a></td>
+                    </tr>
+                @endforeach
+            </tbody>
 
-    </tbody>
-    <button type="button" class="btn btn-danger">Eliminar registro</button>
-    <button type="submit" class="btn btn-primary">Registrar nuevo</button>
-  </table>
+        </table>
+    </div>
 
-
-  <!-- table 2 -->
-  <table class="table">
-    <thead>
-      <tr>
-        <!-- articulos -->
-        <th scope="col">Tipo</th>
-        <th scope="col">Marca</th>
-        <th scope="col">Descripción</th>
-        <th scope="col">Tipo producto</th>
-        <!-- same of both -->
-        <th scope="col">Cantidad</th>
-        <th scope="col">Precio compra</th>
-        <th scope="col">Precio venta</th>
-        <th scope="col">Fecha ingreso</th>
-        <th scope="col">Tipo producto</th>
-
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Playera</td>
-        <td>Mike</td>
-        <td>Playera marca Mike...</td>
-        <td>Vestimenta</td>
-        <td>50</td>
-        <td>$500</td>
-        <td>$1000</td>
-        <td>10/11/10</td>
-        <td>Tipo: 1</td>
-
-      </tr>
-      
-      <th scope="row">1</th>
-      <td>T-shirt</td>
-      <td>Pumba</td>
-      <td>Playera marca Pumba...</td>
-      <td>Vestimenta</td>
-      <td>50</td>
-      <td>$500</td>
-      <td>$1000</td>
-      <td>10/11/10</td>
-      <td>Tipo: 1</td>
-
-    </tr>
-
-    </tbody>
-  </table>
+    {{-- Articulos --}}
+    <div class="container col-md-6">
+        <table class="table">
+            <h2>Articulos</h2>
+            <thead>
+                <tr>
+                    <!-- articulos -->
+                    <th scope="col">ID</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Cantidad</th>
+                    <!-- same of both -->
+                    <th scope="col">Precio compra</th>
+                    <th scope="col">Precio venta</th>
+                    <th scope="col">Fecha ingreso</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($resultProductos as $item)
+                    <tr>
+                        <td><a>{{ $item->idProducto }}</a></td>
+                        <td><a>{{ $item->tipo }}</a></td>
+                        <td><a>{{ $item->marca }}</a></td>
+                        <td><a>{{ $item->descripcion }}</a></td>
+                        <td><a>{{ $item->cantidad }}</a></td>
+                        <td><a>{{ $item->precioCompra }}</a></td>
+                        <td><a>{{ $item->precioVenta }}</a></td>
+                        <td><a>{{ $item->created_at }}</a></td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
 
 

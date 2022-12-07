@@ -38,7 +38,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('inventario') }}">Inventario</a>
+                        <a class="nav-link" href="{{ route('comics.inventarioComics') }}">Inventario</a>
                     </li>
 
                     <li class="nav-item">

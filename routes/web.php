@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ControladorVistas;
 use App\Http\Controllers\ControladorDB;
-
+//use App\Models\Comics;
 //usando ControladorBD
 
 //ROUTES FOR COMICS
@@ -16,6 +16,9 @@ Route::post('comics', [ControladorDB::class, 'storeComics']) -> name('comics.sto
 
 //list comics
 Route::get('comics', [ControladorDB::class,'indexComics']) -> name('comics.indexComics');
+
+// //inventario comics y articulos
+Route::get('inventarioComics', [ControladorDB::class,'inventarioComics']) -> name('comics.inventarioComics');
 
 //edit comics
 Route::get('/comics/{id}/editComics', [ControladorDB::class,'editComics']) -> name('comics.editComics');
