@@ -6,12 +6,153 @@ use Illuminate\Http\Request;
 use App\Http\Requests\validadorRequestFormCom;
 use App\Http\Requests\validadorRequestFormProd;
 use App\Http\Requests\validadorRequestProcFormProve;
+use App\Http\Requests\validadorPedido;
+use App\Http\Requests\validadorCarrito;
+
 use DB;
 use Carbon\Carbon;
+//use Barryvdh\DomPDF\Facade as PDF;
+use PDF;
+use App\Mail\PedidoMail;
+//use Illuminate\Support\Facades\Mail;
+use Mail;
 //use App\Models\Comics;
 
 class ControladorDB extends Controller
 {
+    //-------LEVANTAR PEDIDO---------
+
+    public function downloadCarrito()
+    {
+        $ped = DB::table('tb_carrito')->get();
+
+        view()->share('ped.downloadCarrito', $ped);
+
+        $pdf = PDF::loadView('downloadCarrito', ['ped' => $ped]);
+
+        return $pdf->download('pedidosdownload.pdf');
+    }
+
+    public function carritoUp(Request $request)
+    {
+        $cantidad = $request->input('txtCantidad');
+        $precioVenta = $request->input('txtPrecioVenta');
+        $total = $cantidad * $precioVenta;
+        DB::table('tb_carrito')->insert([
+            'item' => $request->input('txtItem'),
+            'cantidad' => $request->input('txtCantidad'),
+            'precioVenta' => $request->input('txtPrecioVenta'),
+            'total' => $total,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        return redirect('ped/carrito')->with('Guardado', 'abc');
+    }
+
+    public function carrito(Request $request)
+    {
+       
+        $resultComics = DB::table('tb_comics')
+            ->where('cantidad', '>', '0')
+            ->get();
+
+        $resultProductos = DB::table('table_productos')
+            ->where('cantidad', '>', '0')
+            ->get();
+
+        // return view('comics/inventario', compact('comics', 'texto'));
+        return view('carrito', compact('resultComics','resultProductos'));
+    }
+
+    // public function indexPedidos()
+    // {
+    //     $pedidos = DB::table('tb_levantar_pedido')->get();
+    //     return view('pedidos/levantarPedido', compact('getProveedor'));
+    // }
+
+    public function sendMail(Request $request)
+    {
+        $correo = new PedidoMail();
+
+        Mail::to('jobskevs@hotmail.com')->send($correo);
+        return 'envio exitoso';
+    }
+
+    public function download()
+    {
+        $pedidos = DB::table('tb_levantar_pedido')->get();
+
+        view()->share('pedidos.download', $pedidos);
+
+        $pdf = PDF::loadView('download', ['pedidos' => $pedidos]);
+
+        return $pdf->download('pedidosdownload.pdf');
+    }
+
+    //form PEDIDO
+    public function createPedidos()
+    {
+        // $getProveedor = DB::table('tb_proveedores')->get();
+        // $getComic = DB::table('tb_comics')->count();
+        // $resultProductos = DB::table('table_productos')->get();
+
+        $pedidos = DB::table('tb_levantar_pedido')->get();
+
+        $result = DB::table('tb_proveedores')
+            ->join('tb_comics', 'tb_proveedores.idProveedor', '=', 'tb_comics.proveedor_id')
+            // -> select('tb_proveedores.idProveedor','tb_proveedores.empresa','tb_comics.nombre')
+            ->get();
+
+        $result2 = DB::table('tb_proveedores')
+            ->join('table_productos', 'tb_proveedores.idProveedor', '=', 'table_productos.proveedor_id')
+            // -> select('tb_proveedores.idProveedor','tb_proveedores.empresa','tb_comics.nombre')
+            ->get();
+
+        // $countArticulos = DB::table('tb_proveedores')
+        // -> join('table_productos','tb_proveedores.idProveedor','=','table_productos.proveedor_id')
+        // // -> select('tb_proveedores.idProveedor','tb_proveedores.empresa','tb_comics.nombre')
+        // ->count();
+
+        //return view('levantarPedido', compact('getProveedor','getComic','resultProductos'));
+        return view('levantarPedido', compact('result', 'result2', 'pedidos'));
+    }
+    //save on DB
+    public function storePedido(validadorPedido $request)
+    {
+        //this works!!!!!
+        DB::table('tb_levantar_pedido')->insert([
+            'proveedor' => $request->input('txtProveedor'),
+            'item' => $request->input('txtItem'),
+            'cantidad' => $request->input('txtCantidad'),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        // DB::table('tb_levantar_pedido')->insert([
+        //     'proveedor' => $request->input('txtProveedor2'),
+        //     'item' => $request->input('txtItem2'),
+        //     'cantidad' => $request->input('txtCantidad2'),
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => Carbon::now(),
+        // ]);
+
+        //$input =['message' => 'This is a test!'];
+        // foreach (['jobskevs@hotmail.com'] as $recipient) {
+        //     Mail::to($recipient)->send(new PedidoMail());
+        // }
+        // Mail::to('120034213@upq.edu.mx')->send(new PedidoMail($input));
+
+        // $data = ['name' => 'Juan'];
+
+        // Mail::to('jobskevs@hotmail.com')->send(new PedidoMail($data));
+
+        // $correo = new PedidoMail;
+
+        // Mail::to('jobskevs@hotmail.com')->send($correo);
+
+        return redirect('pedidos/createPedidos')->with('Pedido', 'abc');
+    }
+
     //---------PROVEEDORES------
 
     //to delete
@@ -152,7 +293,9 @@ class ControladorDB extends Controller
     //form products
     public function createProductos()
     {
-        return view('almacenProductos');
+        $proveedores = DB::table('tb_proveedores')->get();
+
+        return view('almacenProductos', compact('proveedores'));
     }
     //save on DB
     public function storeProductos(validadorRequestFormProd $request)
@@ -169,6 +312,7 @@ class ControladorDB extends Controller
             'precioCompra' => $request->input('txtPrecioCompraProductos'),
             'precioVenta' => $precioVenta,
             'fecha' => Carbon::now(),
+            'proveedor_id' => $request->input('txtProveedor'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -248,7 +392,7 @@ class ControladorDB extends Controller
         $resultProductos = DB::table('table_productos')
             ->where('tipo', 'LIKE', '%' . $buscarpor . '%')
             ->get();
-       
+
         // return view('comics/inventario', compact('comics', 'texto'));
         return view('inventario', compact('resultComics', 'resultProductos', 'buscarpor'));
     }
@@ -256,7 +400,9 @@ class ControladorDB extends Controller
     //form comics
     public function createComics()
     {
-        return view('almacenComics');
+        $proveedores = DB::table('tb_proveedores')->get();
+
+        return view('almacenComics', compact('proveedores'));
     }
     //save on DB
     public function storeComics(validadorRequestFormCom $request)
@@ -272,6 +418,7 @@ class ControladorDB extends Controller
             'cantidad' => $request->input('txtCantidadComics'),
             'precioCompra' => $request->input('txtPrecioCompraComics'),
             'precioVenta' => $precioVenta,
+            'proveedor_id' => $request->input('txtProveedor'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

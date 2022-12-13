@@ -28,7 +28,9 @@ class validadorRequestFormProd extends FormRequest
             'txtMarcaProductos' => 'required',
             'txtDescripcionProductos' => 'required',
             'txtCantidadProductos' => 'required| numeric',
-            'txtPrecioCompraProductos' => 'required| numeric'
+            'txtPrecioCompraProductos' => 'required| numeric',
+            'txtProveedor' => 'required'
+
         ];
     }
 }

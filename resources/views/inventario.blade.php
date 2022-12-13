@@ -32,7 +32,12 @@
                         <td><a>{{ $value->nombre }}</a></td>
                         <td><a>{{ $value->edicion }}</a></td>
                         <td><a>{{ $value->compania }}</a></td>
-                        <td><a>{{ $value->cantidad }}</a></td>
+                        @if ($value->cantidad == 0)
+                            <td>
+                                <p class="text-danger bg-dark" >{{ $value->cantidad }}</a>
+                            </td>
+                        @endif
+                        {{-- <td><a>{{ $value->cantidad }}</a></td> --}}
                         <td><a>{{ $value->precioCompra }}</a></td>
                         <td><a>{{ $value->precioVenta }}</a></td>
                         <td><a>{{ $value->created_at }}</a></td>

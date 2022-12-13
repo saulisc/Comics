@@ -77,6 +77,20 @@
 
                 </div>
 
+                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Proveedor</label>
+                <div class="col-sm-10">
+                    <select name="txtProveedor" id="txtProveedor" class="form-control">
+                        <option value="">----ESCOJE UN PROVEEDOR---</option>
+                        @foreach ($proveedores as $proveedor)
+                            <option value="{{ $proveedor->idProveedor }}">
+                                "{{ $proveedor->empresa }}"
+                            </option>
+                        @endforeach
+                    </select>
+                    <p class="text-danger fst-italic"> {{ $errors->first('txtProveedor') }}</p>
+
+                </div>
+
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary" onclick="return confirmacion()">Guardar Comic</button>
 

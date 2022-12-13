@@ -28,7 +28,8 @@ class validadorRequestFormCom extends FormRequest
             'txtEdicionComics' => 'required',
             'txtCompañiaComics' => 'required',
             'txtCantidadComics' => 'required|numeric',
-            'txtPrecioCompraComics' => 'required|numeric'
+            'txtPrecioCompraComics' => 'required|numeric',
+            'txtProveedor' => 'required'
         ];
     }
 }

@@ -72,6 +72,30 @@ Route::get('proveedores/{id}/deleteProveedores', [ControladorDB::class, 'deleteP
 Route::delete('proveedores/{id}', [ControladorDB::class, 'destroyProveedores']) -> name('proveedores.destroyProveedores');
 
 
+//ROUTES FOR PEDIDOS
+
+//create PEDIDOS
+Route::get('pedidos/createPedidos', [ControladorDB::class,'createPedidos']) -> name('pedidos.createPedidos');
+//post on db for pedidos
+Route::post('pedidos', [ControladorDB::class, 'storePedido']) -> name('pedidos.storePedido');
+//download PDF
+Route::get('download', [ControladorDB::class,'download']) -> name('download');
+//to send email
+Route::get('pedidos', [ControladorDB::class, 'storePedido']) -> name('pedidos.storePedido');
+Route::get('mail/send-grid', [ControladorDB::class, 'sendMail']);
+
+//create PEDIDOS
+Route::get('ped/carrito', [ControladorDB::class,'carrito']) -> name('ped.carrito');
+//post on db for pedidos
+Route::post('ped', [ControladorDB::class, 'carritoUp']) -> name('ped.carritoUp');
+
+Route::get('downloadCarrito', [ControladorDB::class,'downloadCarrito']) -> name('downloadCarrito');
+
+//list pedidos
+//Route::get('pedidos', [ControladorDB::class,'indexPedidos']) -> name('pedidos.indexPedidos');
+
+
+
 
 
 

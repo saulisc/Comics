@@ -1,61 +1,107 @@
-<!-- no esta terminada esta vista -->
-
 @extends('template')
 
 @section('contenido')
+    <script src="js/jquery-1.9.1.min.js"></script>
+
+    <div class="container col-md-6">
+        <form method="POST" action="{{ route('pedidos.storePedido') }}">
+            @csrf
+            <table class="table">
+                <h2>Levantar pedido Comics</h2>
+                <div class="col-xl-12 text-right">
+                    <a href="{{ route('download') }}" class="btn btn-success btn-sm">Export to PDF</a>
+                </div>
+                <thead>
+                    <tr>
+
+                        <!-- comics -->
+                        <th scope="col">ID Proveedor</th>
+                        <th scope="col">Proveedor</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Solicitar</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach ($result as $comic)
+                    <form method="POST" action="{{ route('pedidos.storePedido') }}">
+                        @csrf
+                        <tr>
+                            <td><a><input type="text" class="form-control" name="txtProveedorID"
+                                        value={{ $comic->proveedor_id }}></a></td>
+                            <td><a><input type="text" class="form-control" name="txtProveedor"
+                                        value={{ $comic->empresa }}></a></td>
+                            <td><a><input type="text" class="form-control" name="txtItem" value={{ $comic->nombre }}></a>
+                            </td>
+                            <td><input type="number" name="txtCantidad" min="0" max="100" value="0"></td>
+                            <td><a> <button type="submit" class="btn btn-primary">Solicitar
+                            </button>
+                        </a></td>
+                        </tr>
+                    </form>
+                    @endforeach
+
+                </tbody>
+            </table>
 
 
-<table class="table">
-    <i class="bi bi-filter"></i>
-    <thead>
-      <tr>
-        <!-- comics -->
-        <th scope="col">#</th>
-        <th scope="col">Proveedor</th>
-        <th scope="col">Articulo</th>
-        <th scope="col">Compañia</th>
-        <th scope="col">Unidad de Medida</th>
-        <th scope="col">Cantidad</th>
-        <!-- same of both -->
-        <th scope="col">Precio compra</th>
-        <th scope="col">Precio venta</th>
-        <th scope="col">Fecha ingreso</th>
-        <th scope="col">Tipo producto</th>
 
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
-        <th scope="row">1</th>
-        <td>Goku</td>
-        <td>Latest</td>
-        <td>Universal Co</td>
-        <td>EXG</td>
-        <td>50</td>
-        <td>$.50</td>
-        <td>$100</td>
-        <td>10/10/10</td>
-        <td>Tipo: 1</td>
-      </tr>
-      
-      <tr>
-        <th scope="row">1</th>
-        <td>Vegeta</td>
-        <td>5.00</td>
-        <td>Universal Co</td>
-        <td>EXG</td>
-        <td>58</td>
-        <td>$90</td>
-        <td>$200</td>
-        <td>12/10/10</td>
-        <td>Tipo: 1</td>
+            <div class="container">
+                <table class="table">
+                    <h2>Levantar pedido Articulos</h2>
 
-      </tr>
+                    <thead>
+                        <tr>
 
-    </tbody>
-    <button type="submit" class="btn btn-primary">Registrar nuevo</button>
-  </table>
+                            <!-- comics -->
+                            <th scope="col">ID Proveedor</th>
+                            <th scope="col">Proveedor</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Cantidad</th>
 
+                        </tr>
+                    </thead>
 
+                    <tbody>
+
+                        @foreach ($result2 as $comic2)
+                        <form method="POST" action="{{ route('pedidos.storePedido') }}">
+                            @csrf
+                            <tr>
+
+                                {{-- <td><a>{{ $comic2->proveedor_id }}</a></td>
+                                <td><a>{{ $comic2->empresa }}</a></td>
+                                <td><a>{{ $comic2->tipo }}</a></td>
+                                <td><input type="number" name="cantidad" id="cantidad" min="0" max="100"
+                                        value="0"></td> --}}
+
+                                <td><a><input type="text" class="form-control" name="txtProveedorID"
+                                            value={{ $comic2->proveedor_id }}></a></td>
+                                <td><a><input type="text" class="form-control" name="txtProveedor"
+                                            value={{ $comic2->empresa }}></a></td>
+                                <td><a><input type="text" class="form-control" name="txtItem"
+                                            value={{ $comic2->tipo }}></a>
+                                </td>
+                                <td><input type="number" name="txtCantidad" min="0" max="100" value="0">
+                                </td>
+                                <td><a> <button type="submit" class="btn btn-primary">Solicitar
+                                </button>
+                            </a></td>
+                            </tr>
+                        </form>
+                        @endforeach
+
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Guardar pedido</button>
+
+        </form>
+    </div>
+
+    </div>
 @stop

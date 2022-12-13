@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('cantidad');
             $table->string('precioCompra');
             $table->string('precioVenta');
+            $table->integer('proveedor_id')->unsigned();
+            $table->foreign('proveedor_id')->references('idProveedor')->on('tb_proveedores');
             $table->timestamps();
         });
     }

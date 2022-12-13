@@ -26,15 +26,18 @@
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('proveedores.createProveedores') }}">Registro Proveedores</a>
+                    </li>
+                    {{-- <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Log In</a>
+                    </li> --}}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('comics.createComics') }}">Almacenar Comics</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('comics.createComics') }}">Almacen Comics</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('almacenProductos') }}">Almacen Productos</a>
+                        <a class="nav-link" href="{{ route('productos.createProductos') }}">Almacenar Productos</a>
                     </li>
 
                     <li class="nav-item">
@@ -42,12 +45,13 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('levantarPedido') }}">Levantar Pedido</a>
+                        <a class="nav-link" href="{{ route('pedidos.createPedidos') }}">Levantar Pedido</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('registroProveedores') }}">Registro Proveedores</a>
+                        <a class="nav-link" href="{{ route('ped.carrito') }}">Vender productos</a>
                     </li>
+
 
                 </ul>
                 <form class="d-flex" role="search">

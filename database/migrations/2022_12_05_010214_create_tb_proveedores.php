@@ -23,6 +23,7 @@ return new class extends Migration
             $table -> string('noCelular');
             $table -> string('correo');
             $table->timestamps();
+
         });
     }
 

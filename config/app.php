@@ -194,7 +194,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        //to generate pdf
+        Barryvdh\DomPDF\ServiceProvider::class,
+        //to sendgrid email
+        //Sichikawa\LaravelSendgridDriver\SendgridTransportServiceProvider::class
     ],
 
     /*
